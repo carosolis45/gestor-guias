@@ -5,8 +5,6 @@ import cl.duoc.ejemplo.gestorguias.service.GuiaService;
 import cl.duoc.ejemplo.gestorguias.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
@@ -30,23 +28,6 @@ public class GuiaController {
     @PostMapping("/subir/{id}")
     public ResponseEntity<String> subirGuiaS3(@PathVariable Long id) {
         return ResponseEntity.ok(guiaService.subirAS3(id));
-    }
-
-    @GetMapping("/descargar")
-    public ResponseEntity<byte[]> descargarGuia(@RequestParam String transportista,
-                                                  @RequestParam String numeroGuia,
-                                                  @RequestParam String fecha) {
-        String carpeta = fecha + "/" + transportista;
-        String nombreArchivo = numeroGuia + ".txt";
-        
-        if (s3Service.archivoExiste(carpeta, nombreArchivo)) {
-            byte[] contenido = s3Service.descargarArchivo(carpeta, nombreArchivo);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + nombreArchivo)
-                    .contentType(MediaType.TEXT_PLAIN)
-                    .body(contenido);
-        }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/eliminar")

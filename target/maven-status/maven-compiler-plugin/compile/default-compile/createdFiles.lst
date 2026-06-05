@@ -1,4 +1,3 @@
-cl\duoc\ejemplo\gestorguias\config\AwsS3Config.class
 cl\duoc\ejemplo\gestorguias\repository\GuiaRepository.class
 cl\duoc\ejemplo\gestorguias\entity\GuiaDespacho.class
 cl\duoc\ejemplo\gestorguias\controller\GuiaController.class
